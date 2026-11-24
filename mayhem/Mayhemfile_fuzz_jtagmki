@@ -1,0 +1,10 @@
+project: savantenvs/avrdude
+target: fuzz_jtagmki
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_jtagmki/testsuite
+
+cmds:
+  - cmd: /mayhem/mayhem/out/fuzz_jtagmki
+    libfuzzer: true
+    timeout: 10

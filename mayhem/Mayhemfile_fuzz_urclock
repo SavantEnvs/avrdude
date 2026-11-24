@@ -1,0 +1,10 @@
+project: savantenvs/avrdude
+target: fuzz_urclock
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_urclock/testsuite
+
+cmds:
+  - cmd: /mayhem/mayhem/out/fuzz_urclock
+    libfuzzer: true
+    timeout: 10

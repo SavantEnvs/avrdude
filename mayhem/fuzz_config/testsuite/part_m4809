@@ -1,0 +1,70 @@
+part parent ".avr8x" # .avr8x_mega
+    desc                   = "AVR8X mega family common values";
+    id                     = ".avr8x_mega";
+    family_id              = "megaAVR";
+    # Dedicated UPDI pin, no HV
+    hvupdi_variant         = 1;
+
+    memory "fuse5"
+        bitmask            = 0xc9;
+    ;
+
+    memory "userrow"
+        size               = 64;
+        page_size          = 64;
+        offset             = 0x1300;
+        readsize           = 256;
+    ;
+
+    memory "usersig"
+        alias "userrow";
+    ;
+;
+part parent ".avr8x_mega" # m4809
+    desc                   = "ATmega4809";
+    id                     = "m4809";
+    variants               =
+        "ATmega4809-AF:  TQFP48, Fmax=20 MHz, T=[-40 C, 125 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-AFR: TQFP48, Fmax=20 MHz, T=[-40 C, 125 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-AU:  TQFP48, Fmax=20 MHz, T=[-40 C,  85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-AUR: TQFP48, Fmax=20 MHz, T=[-40 C,  85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-MF:  VQFN48, Fmax=20 MHz, T=[-40 C, 125 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-MFR: VQFN48, Fmax=20 MHz, T=[-40 C, 125 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-MU:  VQFN48, Fmax=20 MHz, T=[-40 C,  85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-MUR: VQFN48, Fmax=20 MHz, T=[-40 C,  85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATmega4809-PF:  PDIP40, Fmax=20 MHz, T=[-40 C, 125 C], Vcc=[1.8 V, 5.5 V]";
+    mcuid                  = 326;
+    archnum                = 103;
+    instruction_set        = ISA_avrxmega3;
+    n_interrupts           = 40;
+    signature              = 0x1e 0x96 0x51;
+
+    memory "eeprom"
+        size               = 256;
+        page_size          = 64;
+        offset             = 0x1400;
+        readsize           = 256;
+    ;
+
+    memory "flash"
+        size               = 0xc000;
+        page_size          = 128;
+        offset             = 0x4000;
+        readsize           = 256;
+    ;
+
+    memory "lock"
+        initval            = 0xc5;
+    ;
+
+    memory "prodsig"
+        size               = 128;
+        page_size          = 128;
+        readsize           = 128;
+    ;
+
+    memory "sram"
+        size               = 6144;
+        offset             = 0x2800;
+    ;
+;

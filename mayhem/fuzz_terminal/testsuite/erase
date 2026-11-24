@@ -1,0 +1,4 @@
+erase
+pgerase flash 0
+write flash 0 0xff ...
+abort

@@ -1,0 +1,7 @@
+programmer # arduino
+    id                     = "arduino";
+    desc                   = "Arduino bootloader using STK500 v1 protocol";
+    type                   = "arduino";
+    prog_modes             = PM_SPM;
+    connection_type        = serial;
+;

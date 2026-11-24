@@ -1,0 +1,2 @@
+write eeprom 0 0x1234 'a' "str" 3.5 -1LL
+dump eeprom 0 32

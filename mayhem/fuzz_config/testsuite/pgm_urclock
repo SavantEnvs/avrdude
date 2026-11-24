@@ -1,0 +1,7 @@
+programmer # urclock
+    id                     = "urclock";
+    desc                   = "Urboot bootloaders using urprotocol";
+    type                   = "urclock";
+    prog_modes             = PM_SPM;
+    connection_type        = serial;
+;

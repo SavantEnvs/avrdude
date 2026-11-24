@@ -1,0 +1,171 @@
+part parent ".classic-nocal" # .classic
+    desc                   = "Common values for classic parts";
+    id                     = ".classic";
+    factory_fcpu           = 1000000;
+    chip_erase             = "1010.1100--1000.0000--0000.0000--0000.0000";
+    pgm_enable             = "1010.1100--0101.0011--0000.0000--0000.0000";
+
+    memory "prodsig"
+        size               = 24;
+        read               = "0 0 1 1 a0 0 0 0  0 0 0 0 0 0 0 0  0 0 0 0 a4 a3 a2 a1  o o o o o o o o";
+    ;
+
+    memory "sigrow"
+        alias "prodsig";
+    ;
+
+    memory "calibration"
+        size               = 1;
+        read               = "0011.1000--0000.0000--0000.0000--oooo.oooo";
+    ;
+
+    memory "sernum"
+        size               = 10;
+        offset             = 0xe; # Sub-region of prodsig
+        read               = "0 0 1 1 a0 0 0 0  0 0 0 0 0 0 0 0  0 0 0 0 a4 a3 a2 a1  o o o o o o o o";
+    ;
+;
+part parent ".classic" # t13
+    desc                   = "ATtiny13";
+    id                     = "t13";
+    variants               =
+        "ATtiny13:         N/A,    Fmax=20 MHz, T=[N/A,   85 C], Vcc=[N/A,     N/A]",
+        "ATtiny13-20MMU:   MLF10,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20MMUR:  VDFN10, Fmax=20 MHz, T=[N/A,    N/A], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20MU:    MLF20,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20MUR:   WQFN20, Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20PU:    PDIP8,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SQ:    SOIC8,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SQR:   SOIC8,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SSQ:   SOIC8N, Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SSQR:  SOIC8,  Fmax=20 MHz, T=[N/A,    N/A], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SSU:   SOIC8N, Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SSUR:  SOIC8N, Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SU:    SOIC8,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13-20SUR:   SOIC8,  Fmax=20 MHz, T=[-40 C, 85 C], Vcc=[2.7 V, 5.5 V]",
+        "ATtiny13V-10MMU:  MLF10,  Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10MMUR: VDFN10, Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10MU:   MLF20,  Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10MUR:  WQFN20, Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10PQ:   PDIP8,  Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10PU:   PDIP8,  Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10SSU:  SOIC8N, Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10SSUR: SOIC8N, Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10SU:   SOIC8,  Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]",
+        "ATtiny13V-10SUR:  SOIC8,  Fmax=10 MHz, T=[-40 C, 85 C], Vcc=[1.8 V, 5.5 V]";
+    prog_modes             = PM_SPM | PM_ISP | PM_HVSP | PM_debugWIRE;
+    mcuid                  = 10;
+    archnum                = 25;
+    instruction_set        = ISA_avr25;
+    n_interrupts           = 10;
+    stk500_devcode         = 0x14;
+    chip_erase_delay       = 4000;
+    signature              = 0x1e 0x90 0x07;
+    timeout                = 200;
+    stabdelay              = 100;
+    cmdexedelay            = 25;
+    synchloops             = 32;
+    pollindex              = 3;
+    pollvalue              = 0x53;
+    predelay               = 1;
+    postdelay              = 1;
+    pollmethod             = 1;
+    hvsp_controlstack      =
+        0x4c, 0x0c, 0x1c, 0x2c, 0x3c, 0x64, 0x74, 0x66,
+        0x68, 0x78, 0x68, 0x68, 0x7a, 0x6a, 0x68, 0x78,
+        0x78, 0x7d, 0x6d, 0x0c, 0x80, 0x40, 0x20, 0x10,
+        0x11, 0x08, 0x04, 0x02, 0x03, 0x08, 0x04, 0x00;
+    flash_instr            =  0xb4, 0x0e, 0x1e;
+    eeprom_instr           =
+        0xbb, 0xfe, 0xbb, 0xee, 0xbb, 0xcc, 0xb2, 0x0d,
+        0xbc, 0x0e, 0xb4, 0x0e, 0xba, 0x0d, 0xbb, 0xbc,
+        0x99, 0xe1, 0xbb, 0xac;
+    hventerstabdelay       = 100;
+    latchcycles            = 1;
+    togglevtg              = 1;
+    poweroffdelay          = 25;
+    resetdelayms           = 1;
+    hvleavestabdelay       = 100;
+    resetdelay             = 25;
+    chiperasepolltimeout   = 40;
+    programfusepolltimeout = 25;
+    programlockpolltimeout = 25;
+    synchcycles            = 6;
+    idr                    = 0x2e;
+    spmcr                  = 0x57;
+    eecr                   = 0x3c;
+    ocdrev                 = 0;
+    factory_fcpu           = 1200000;
+
+    memory "eeprom"
+        size               = 64;
+        page_size          = 4;
+        min_write_delay    = 4000;
+        max_write_delay    = 4000;
+        mode               = 0x41;
+        delay              = 5;
+        blocksize          = 4;
+        readsize           = 256;
+        read               = "1010.0000--000x.xxxx--xxaa.aaaa--oooo.oooo";
+        write              = "1100.0000--000x.xxxx--xxaa.aaaa--iiii.iiii";
+        loadpage_lo        = "1100.0001--0000.0000--0000.00aa--iiii.iiii";
+        writepage          = "1100.0010--00xx.xxxx--xxaa.aa00--xxxx.xxxx";
+    ;
+
+    memory "flash"
+        paged              = yes;
+        size               = 1024;
+        page_size          = 32;
+        num_pages          = 32;
+        min_write_delay    = 4500;
+        max_write_delay    = 4500;
+        mode               = 0x41;
+        delay              = 10;
+        blocksize          = 32;
+        readsize           = 256;
+        read_lo            = "0010.0000--0000.000a--aaaa.aaaa--oooo.oooo";
+        read_hi            = "0010.1000--0000.000a--aaaa.aaaa--oooo.oooo";
+        loadpage_lo        = "0100.0000--000x.xxxx--xxxx.aaaa--iiii.iiii";
+        loadpage_hi        = "0100.1000--000x.xxxx--xxxx.aaaa--iiii.iiii";
+        writepage          = "0100.1100--0000.000a--aaaa.xxxx--xxxx.xxxx";
+    ;
+
+    memory "lfuse"
+        size               = 1;
+        initval            = 0x6a;
+        min_write_delay    = 4500;
+        max_write_delay    = 4500;
+        read               = "0101.0000--0000.0000--xxxx.xxxx--oooo.oooo";
+        write              = "1010.1100--1010.0000--xxxx.xxxx--iiii.iiii";
+    ;
+
+    memory "hfuse"
+        size               = 1;
+        initval            = 0xff;
+        bitmask            = 0x1f;
+        min_write_delay    = 4500;
+        max_write_delay    = 4500;
+        read               = "0101.1000--0000.1000--xxxx.xxxx--oooo.oooo";
+        write              = "1010.1100--1010.1000--xxxx.xxxx--iiii.iiii";
+    ;
+
+    memory "lock"
+        bitmask            = 0x03;
+        min_write_delay    = 4500;
+        max_write_delay    = 4500;
+    ;
+
+    memory "calibration"
+        size               = 2;
+        read               = "0011.1000--000x.xxxx--0000.000a--oooo.oooo";
+    ;
+
+    memory "io"
+        size               = 64;
+    ;
+
+    memory "sram"
+        size               = 64;
+        offset             = 0x60;
+    ;
+;

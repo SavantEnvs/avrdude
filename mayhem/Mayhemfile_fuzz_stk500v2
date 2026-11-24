@@ -1,0 +1,10 @@
+project: savantenvs/avrdude
+target: fuzz_stk500v2
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_stk500v2/testsuite
+
+cmds:
+  - cmd: /mayhem/mayhem/out/fuzz_stk500v2
+    libfuzzer: true
+    timeout: 10

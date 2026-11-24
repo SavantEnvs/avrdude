@@ -1,0 +1,8 @@
+programmer # serialupdi
+    id                     = "serialupdi";
+    desc                   = "SerialUPDI";
+    type                   = "serialupdi";
+    prog_modes             = PM_UPDI;
+    connection_type        = serial;
+    hvupdi_support         = 1;
+;

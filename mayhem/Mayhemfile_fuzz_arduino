@@ -1,0 +1,10 @@
+project: savantenvs/avrdude
+target: fuzz_arduino
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_arduino/testsuite
+
+cmds:
+  - cmd: /mayhem/mayhem/out/fuzz_arduino
+    libfuzzer: true
+    timeout: 10

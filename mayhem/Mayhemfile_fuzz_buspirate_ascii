@@ -1,0 +1,10 @@
+project: savantenvs/avrdude
+target: fuzz_buspirate_ascii
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_buspirate_ascii/testsuite
+
+cmds:
+  - cmd: /mayhem/mayhem/out/fuzz_buspirate_ascii
+    libfuzzer: true
+    timeout: 10

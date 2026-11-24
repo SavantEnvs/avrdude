@@ -1,0 +1,2 @@
+dump flash 0 64
+read eeprom 0 16

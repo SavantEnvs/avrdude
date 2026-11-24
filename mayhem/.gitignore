@@ -1,0 +1,4 @@
+# build outputs of mayhem/build.sh
+/out/
+/build_fuzz/
+/build_test/

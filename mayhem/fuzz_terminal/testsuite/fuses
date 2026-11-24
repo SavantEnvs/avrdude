@@ -1,0 +1,2 @@
+write lfuse 0 0xe2; dump lfuse; regfile
+factory reset

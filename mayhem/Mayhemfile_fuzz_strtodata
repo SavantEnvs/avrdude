@@ -1,0 +1,10 @@
+project: savantenvs/avrdude
+target: fuzz_strtodata
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_strtodata/testsuite
+
+cmds:
+  - cmd: /mayhem/mayhem/out/fuzz_strtodata
+    libfuzzer: true
+    timeout: 5

@@ -1,0 +1,476 @@
+# AVRDUDE Configuration File                               -*- text -*-
+#
+
+avrdude_conf_version = "8.3-20261124 (35125253)";
+
+# This file contains AVRDUDE's default configuration data describing
+# programming hardware pinouts and part definitions. Normally, it
+# requires AVRDUDE be of the same or higher version than above string.
+# AVRDUDE's -C command line option specifies the location of the
+# configuration file. The -c option names the programmer configuration
+# which must match one of the entry's id parameter. The -p option
+# identifies which part AVRDUDE is going to be programming and must
+# match one of the parts' id parameters.
+#
+# DO NOT MODIFY THIS FILE.  Modifications will be overwritten the next
+# time a "make install" is run.  For user-specific additions, use the
+# "-C +filename" command line option.
+#
+# Possible entry formats are:
+#
+#   programmer
+#       parent <id>                               # optional parent
+#       id       = <id1> [, <id2> ... ] ;         # <idN> are quoted strings
+#       desc     = <description> ;                # quoted string
+#       type     = <type>;                        # programmer type, quoted string
+#                                                 # list known types with -c ?type
+#       prog_modes = PM_<i/f> {| PM_<i/f>}        # interfaces, eg, PM_SPM|PM_PDI (1)
+#       is_serialadapter = <yes|no>               # programmer is also a serialadapter
+#       extra_features = HAS_<fea> {| HAS_<fea>}  # extra features, eg, HAS_SUFFER (2)
+#       connection_type = parallel | serial | usb | spi | linuxgpio
+#       port     = <port>                         # default port, quoted string
+#       baudrate = <num> ;                        # baudrate for the programmer
+#       vcc      = <pin1> [, <pin2> ... ] ;       # pin number(s) (3)
+#       buff     = <pin1> [, <pin2> ... ] ;       # pin number(s)
+#       reset    = <pin> ;                        # pin number
+#       sck      = <pin> ;                        # pin number
+#       sdo|pico = <pin> ;                        # pin number
+#       sdi|poci = <pin> ;                        # pin number
+#       tck      = <pin> ;                        # pin number
+#       tdi      = <pin> ;                        # pin number
+#       tdo      = <pin> ;                        # pin number
+#       tms      = <pin> ;                        # pin number
+#       errled   = <pin> ;                        # pin number
+#       rdyled   = <pin> ;                        # pin number
+#       pgmled   = <pin> ;                        # pin number
+#       vfyled   = <pin> ;                        # pin number
+#       usbvid   = <hexnum> ;                     # USB vendor ID
+#       usbpid   = <hexnum> [, <hexnum> ...] ;    # USB product ID (4)
+#       usbdev   = <interface> ;                  # USB interface or other device info
+#       usbvendor = <vendorname> ;                # USB vendor name
+#       usbproduct = <productname> ;              # USB product name
+#       usbsn    = <serialno> ;                   # USB serial number
+#       hvupdi_support = <num> [, <num>, ... ] ;  # HV support for enabling UPDI
+#   ;
+#
+#   # Notes
+#   #
+#   # (1) The following program modes are known:
+#   #  - PM_SPM: Bootloaders, self-programming with SPM opcodes or NVM Controllers
+#   #  - PM_TPI: Tiny Programming Interface (t4, t5, t9, t10, t20, t40, t102, t104)
+#   #  - PM_ISP: SPI programming for In-System Programming (almost all classic parts)
+#   #  - PM_PDI: Program and Debug Interface (xmega parts)
+#   #  - PM_UPDI: Unified Program and Debug Interface
+#   #  - PM_HVSP: High Voltage Serial Programming (some classic parts)
+#   #  - PM_HVPP: High Voltage Parallel Programming (most non-HVSP classic parts)
+#   #  - PM_debugWIRE: Simpler alternative to JTAG (a subset of HVPP/HVSP parts)
+#   #  - PM_JTAG: Joint Test Action Group standard (some classic parts)
+#   #  - PM_JTAGmkI: Subset of PM_JTAG, older parts, Atmel ICE mkI
+#   #  - PM_XMEGAJTAG: JTAG, some XMEGA parts
+#   #  - PM_AVR32JTAG: JTAG for 32-bit AVRs
+#   #  - PM_aWire: AVR32 parts
+#   #
+#   # (2) The following extra programmer features are known:
+#   #  - HAS_SUFFER: Only present on Xplained Mini/Nano programmers.
+#   #    The Super User Fantastic Feature Enable Register allows the user to modify
+#   #    the behavior of the mEDBG programmer/debugger chip. See the Xplained Mini/Nano
+#   #    documentation for more information
+#   #  - HAS_VTARG_SWITCH: Programer has a programmable target power switch
+#   #  - HAS_VTARG_READ: Programmer can read the target voltage
+#   #  - HAS_VTARG_ADJ: Programmer has an adjustable target power source that can
+#   #    be controlled with Avrdude
+#   #  - HAS_FOSC_ADJ: Programmer has a programable frequency generator that
+#   #    can clock an AVR directly through its XTAL1 pin
+#   #  - HAS_VAREF_ADJ: Programmer has an adjustable analog reference voltage that
+#   #    can be controlled with Avrdude
+#   #  - HAS_BITCLOCK_ADJ: Programmer has an adjustable bitclock that
+#   #    can be controlled with Avrdude using -B
+#   #
+#   # (3) To invert the polarity of a pin use a tilde: ~<num>
+#   #     To invert the polarity of all pins in a list use ~(<num1> [, <num2> ... ])
+#   #
+#   # (4) Not all programmer types can process a list of PIDs
+#
+#   serialadapter                                 # same as programmer albeit only for usb parameters
+#       parent <id>                               # optional serialadapter or programmer parent
+#       id       = <id1> [, <id2> ... ] ;         # <idN> are quoted strings
+#       desc     = <description> ;                # quoted string
+#       baudrate = <num> ;                        # optional default baudrate, eg, in .avrduderc
+#       usbvid   = <hexnum> ;                     # USB vendor ID
+#       usbpid   = <hexnum> [, <hexnum> ...] ;    # list of USB product IDs
+#       usbsn    = <serialno> ;                   # USB serial number in per-user .avrduderc
+#   ;
+#
+#   part
+#       desc             = <description> ;        # quoted string, the long part name, eg, "ATmega328p"
+#       id               = <id> ;                 # quoted string, normally an abbreviated part name
+#       variants         = <str1> [, <str2> ...]; # quoted strings, each starts with "<alt-name>: ..."
+#       family_id        = <id> ;                 # quoted string, eg, "megaAVR" or "tinyAVR"
+#       prog_modes       = PM_<i/f> {| PM_<i/f>}  # interfaces, eg, PM_SPM|PM_ISP|PM_HVPP|PM_debugWIRE
+#       mcuid            = <num>;                 # unique id in 0..2039 for 8-bit AVRs
+#       archnum          = <num>;                 # avr-gcc architecture number; -1 if not 8-bit AVR
+#       instruction_set  = <num>;                 # encodes permitted opcodes; -1 if not 8-bit AVR
+#       n_interrupts     = <num>;                 # number of interrupts, used for vector bootloaders
+#       n_page_erase     = <num>;                 # if set, number of pages erased during SPM erase
+#       n_boot_sections  = <num>;                 # number of boot sections
+#       boot_section_size = <num>;                # size of (smallest) boot section, if any
+#       hvupdi_variant   = <num> ;                # numeric: -1 or 0..3; how to enable UPDI with HV
+#       stk500_devcode   = <num> ;                # numeric
+#       avr910_devcode   = <num> ;                # numeric
+#       is_at90s1200     = <yes/no> ;             # AT90S1200 part
+#       signature        = <num> <num> <num> ;    # signature bytes
+#       usbpid           = <num> ;                # DFU USB PID
+#       chip_erase_delay = <num> ;                # microseconds
+#       reset            = dedicated | io ;
+#       retry_pulse      = reset | sck ;
+#       # STK500 parameters (parallel programming IO lines)
+#       pagel            = <num> ;                # page load pin name in hex, eg, 0xD7
+#       bs2              = <num> ;                # byte select 2 pin name in hex, eg, 0xA0
+#       serial           = <yes/no> ;             # can use serial programming
+#       parallel         = <yes/no/pseudo> ;      # can use parallel programming
+#       # STK500v2 parameters, to be taken from Atmel's ATDF files
+#       timeout          = <num> ;
+#       stabdelay        = <num> ;
+#       cmdexedelay      = <num> ;
+#       synchloops       = <num> ;
+#       bytedelay        = <num> ;
+#       pollvalue        = <num> ;
+#       pollindex        = <num> ;
+#       predelay         = <num> ;
+#       postdelay        = <num> ;
+#       pollmethod       = <num> ;
+#       hvspcmdexedelay  = <num> ;
+#       # STK500v2 HV programming parameters, from ATDFs
+#       pp_controlstack  = <num>, <num>, ... ;    # PP only
+#       hvsp_controlstack = <num>, <num>, ... ;   # HVSP only
+#       flash_instr      = <num>, <num>, <num> ;
+#       eeprom_instr     = <num>, <num>, ... ;
+#       hventerstabdelay = <num> ;
+#       progmodedelay    = <num> ;                # PP only
+#       latchcycles      = <num> ;
+#       togglevtg        = <num> ;
+#       poweroffdelay    = <num> ;
+#       resetdelayms     = <num> ;
+#       resetdelayus     = <num> ;
+#       hvleavestabdelay = <num> ;
+#       resetdelay       = <num> ;
+#       synchcycles      = <num> ;                # HVSP only
+#       chiperasepulsewidth = <num> ;             # PP only
+#       chiperasepolltimeout = <num> ;
+#       chiperasetime    = <num> ;                # HVSP only
+#       programfusepulsewidth = <num> ;           # PP only
+#       programfusepolltimeout = <num> ;
+#       programlockpulsewidth = <num> ;           # PP only
+#       programlockpolltimeout = <num> ;
+#       # debugWIRE and/or JTAG ICE mkII parameters, also from ATDF files
+#       allowfullpagebitstream = <yes/no> ;
+#       enablepageprogramming = <yes/no> ;
+#       idr              = <num> ;                # IO addr of IDR (OCD) reg
+#       rampz            = <num> ;                # IO addr of RAMPZ reg
+#       spmcr            = <num> ;                # mem addr of SPMC[S]R reg
+#       eecr             = <num> ;                # mem addr of EECR reg
+#       eind             = <num> ;                # mem addr of EIND reg
+#       mcu_base         = <num> ;                # MCU control block in ATxmega devices
+#       nvm_base         = <num> ;                # NVM controller in ATxmega devices
+#       ocd_base         = <num> ;                # OCD module in AVR8X/UPDI devices
+#       syscfg_base      = <num> ;                # Chip revision ID in AVR8X/UPDI devices
+#       ocdrev           = <num> ;                # JTAGICE3 parameter from ATDF files
+#       pgm_enable       = <instruction format> ;
+#       chip_erase       = <instruction format> ;
+#       # parameters for bootloaders
+#       autobaud_sync    = <num> ;                # autobaud detection byte, default 0x30
+#       factory_fcpu     = <num> ;                # F_CPU in Hz on reset and factory-set fuses
+#
+#       memory <memstr>
+#           paged           = <yes/no> ;          # yes/no (flash of classic parts only)
+#           offset          = <num> ;             # memory offset
+#           size            = <num> ;             # bytes
+#           page_size       = <num> ;             # bytes
+#           num_pages       = <num> ;             # numeric
+#           initval         = <num> ;             # factory setting of fuses and lockbits
+#           bitmask         = <num> ;             # bits used (only in fuses and lockbits)
+#           n_word_writes   = <num> ;             # TPI only: if set, number of words to write
+#           min_write_delay = <num> ;             # micro-seconds
+#           max_write_delay = <num> ;             # micro-seconds
+#           readback        = <num> <num> ;       # pair of byte values
+#           readback_p1     = <num> ;             # byte value (first component)
+#           readback_p2     = <num> ;             # byte value (second component)
+#           pwroff_after_write = <yes/no> ;       # yes/no
+#           mode            = <num> ;             # STK500 v2 file parameter from ATDF files
+#           delay           = <num> ;             #   "
+#           blocksize       = <num> ;             #   "
+#           readsize        = <num> ;             #   "
+#           read            = <instruction format> ;
+#           write           = <instruction format> ;
+#           read_lo         = <instruction format> ;
+#           read_hi         = <instruction format> ;
+#           write_lo        = <instruction format> ;
+#           write_hi        = <instruction format> ;
+#           loadpage_lo     = <instruction format> ;
+#           loadpage_hi     = <instruction format> ;
+#           writepage       = <instruction format> ;
+#       ;
+#   ;
+#
+# If any of the above parameters are not specified, the default value
+# of 0 is used for numerics (except for mcuid, hvupdi_variant, ocdrev,
+# initval and bitmask, all of which default to -1, and for autobaud_sync
+# which defaults to 0x30), or the empty string "" for string values. If
+# a required parameter is left empty, AVRDUDE will complain. Almost all
+# occurrences of numbers (with the exception of pin numbers and where
+# they are separated by space, eg, in signature and readback) can also
+# be given as simple expressions involving arithemtic and bitwise
+# operators.
+#
+# Parts can also inherit parameters from previously defined parts
+# using the following syntax. In this case specified integer and
+# string values override parameter values from the parent part. New
+# memory definitions are added to the definitions inherited from the
+# parent. If, however, a new memory definition refers to an existing
+# one of the same name for that part then, from v7.1, the existing
+# memory definition is extended, and components overwritten with new
+# values. Assigning NULL removes an inherited SPI instruction format,
+# memory definition, control stack, eeprom or flash instruction, eg,
+# as in memory "efuse" = NULL;
+#
+#   part parent <id>                              # quoted string
+#       id               = <id> ;                 # quoted string
+#       <any set of other parameters from the list above>
+#     ;
+#
+# NOTES:
+#   * Not all memories will implement all instructions
+#   * AVR Fuse bits and Lock bits are implemented as a type of memory
+#   * Example memories are:
+#       "flash", "eeprom", "fuse", "lfuse" (low fuse), "hfuse" (high
+#       fuse), "signature", "calibration", "lock"
+#   * The memory specified on the avrdude command line must match
+#     one of the memories defined for the specified chip
+#   * The pwroff_after_write flag causes avrdude to attempt to
+#     power the device off and back on after an unsuccessful write to
+#     the affected memory area if VCC programmer pins are defined. If
+#     VCC pins are not defined for the programmer, a message
+#     indicating that the device needs a power-cycle is printed out.
+#     This flag was added to work around a problem with the
+#     at90s4433/2333's; see the at90s4433 errata at:
+#   * instruction_set refers to the opcodes that a particular AVR can
+#     process; this is only relevant for the disasm terminal command and
+#     does not affect programming of the devices; each bit of the integer
+#     number stands for a set of allowed opcodes or RAMP registers. There
+#     are symbolic values such as ISA_avrxmega103 or ISA_avr35 that
+#     correspond to the avr-gcc instruction set architecture. For more
+#     details see the full AVRDUDE documentation.
+#
+#     https://www.microchip.com/content/dam/mchp/documents/OTH/ProductDocuments/DataSheets/doc1042.pdf
+#
+# INSTRUCTION FORMATS
+#
+#    Instruction formats are specified as a comma separated list of
+#    string values containing information (bit specifiers) about each
+#    of the 32 bits of the instruction.  Bit specifiers may be one of
+#    the following formats:
+#
+#       '1'  = the bit is always set on input as well as output
+#
+#       '0'  = the bit is always clear on input as well as output
+#
+#       'x'  = the bit is ignored on input and output and set as 0
+#
+#       'a'  = the bit is an address bit; from v 7.1 the bit-number
+#              is set to match the right bit position for the
+#              instruction to "just work"
+#
+#       'aN' = the bit is the Nth address bit, bit-number = N, i.e., a12
+#              is address bit 12 on input, a0 is address bit 0.
+#
+#       'i'  = the bit is an input data bit (can optionally be followed
+#              by a memory bit position between 0 and 7 if that differs
+#              from the bit-position in the SPI write command byte)
+#
+#       'o'  = the bit is an output data bit (can optionally be followed
+#              by a memory bit position between 0 and 7)
+#
+#    Each instruction must be composed of 32 bit specifiers. The
+#    instruction specification closely follows the instruction data
+#    provided in Atmel's data sheets for their parts. Note that flash
+#    addresses always refer to *word* addresses whilst all other
+#    memory types specify *byte* addresses.
+#
+#    Example for signature read on the ATmega328P:
+#      read = "0 0 1 1 0 0 0 0",  "0 0 0 x x x x x",
+#             "x x x x x x a1 a0",  "o o o o o o o o";
+#
+#   As the address bit numbers in the SPI opcodes are highly
+#   systematic, they don't really need to be specified. A compact
+#   version of the format specification neither uses bit-numbers for
+#   address lines nor spaces. If such a string is longer than 7
+#   characters, then the characters 0, 1, x, a, i and o will be
+#   recognised as the corresponding bit, whilst any of the characters
+#   ., -, _ or / can act as arbitrary visual separators, which are
+#   ignored. Examples:
+#
+#     loadpage_lo = "0100.0000--000x.xxxx--xxaa.aaaa--iiii.iiii";
+#
+#     loadpage_lo = "0100.0000", "000x.xxxx", "xxaa.aaaa", "iiii.iiii";
+#
+#
+# The following are STK500 part device codes to use for the
+# stk500_devcode field of the part.  These came from Atmel's software
+# section avr061.zip which accompanies the application note
+# AVR061 available from:
+#
+#      https://ww1.microchip.com/downloads/en/Appnotes/doc2525.pdf
+#
+
+#define ATTINY10    0x10  /* the _old_ one that never existed! */
+#define ATTINY11    0x11
+#define ATTINY12    0x12
+#define ATTINY15    0x13
+#define ATTINY13    0x14
+
+#define ATTINY22    0x20
+#define ATTINY26    0x21
+#define ATTINY28    0x22
+#define ATTINY2313  0x23
+
+#define AT90S1200   0x33
+
+#define AT90S2313   0x40
+#define AT90S2323   0x41
+#define AT90S2333   0x42
+#define AT90S2343   0x43
+
+#define AT90S4414   0x50
+#define AT90S4433   0x51
+#define AT90S4434   0x52
+#define ATMEGA48    0x59
+
+#define AT90S8515   0x60
+#define AT90S8535   0x61
+#define AT90C8534   0x62
+#define ATMEGA8515  0x63
+#define ATMEGA8535  0x64
+
+#define ATMEGA8     0x70
+#define ATMEGA88    0x73
+#define ATMEGA168   0x86
+
+#define ATMEGA161   0x80
+#define ATMEGA163   0x81
+#define ATMEGA16    0x82
+#define ATMEGA162   0x83
+#define ATMEGA169   0x84
+
+#define ATMEGA323   0x90
+#define ATMEGA32    0x91
+
+#define ATMEGA64    0xA0
+
+#define ATMEGA103   0xB1
+#define ATMEGA128   0xB2
+#define AT90CAN128  0xB3
+#define AT90CAN64   0xB3
+#define AT90CAN32   0xB3
+
+#define AT86RF401   0xD0
+
+#define AT89START   0xE0
+#define AT89S51     0xE0
+#define AT89S52     0xE1
+
+# The following table lists the devices in the original AVR910
+# appnote:
+# |Device |Signature | Code |
+# +-------+----------+------+
+# |tiny12 | 1E 90 05 | 0x55 |
+# |tiny15 | 1E 90 06 | 0x56 |
+# |       |          |      |
+# | S1200 | 1E 90 01 | 0x13 |
+# |       |          |      |
+# | S2313 | 1E 91 01 | 0x20 |
+# | S2323 | 1E 91 02 | 0x48 |
+# | S2333 | 1E 91 05 | 0x34 |
+# | S2343 | 1E 91 03 | 0x4C |
+# |       |          |      |
+# | S4414 | 1E 92 01 | 0x28 |
+# | S4433 | 1E 92 03 | 0x30 |
+# | S4434 | 1E 92 02 | 0x6C |
+# |       |          |      |
+# | S8515 | 1E 93 01 | 0x38 |
+# | S8535 | 1E 93 03 | 0x68 |
+# |       |          |      |
+# |mega32 | 1E 95 01 | 0x72 |
+# |mega83 | 1E 93 05 | 0x65 |
+# |mega103| 1E 97 01 | 0x41 |
+# |mega161| 1E 94 01 | 0x60 |
+# |mega163| 1E 94 02 | 0x64 |
+
+# Appnote AVR109 also has a table of AVR910 device codes, which
+# lists:
+# dev         avr910   signature
+# ATmega8     0x77     0x1E 0x93 0x07
+# ATmega8515  0x3B     0x1E 0x93 0x06
+# ATmega8535  0x6A     0x1E 0x93 0x08
+# ATmega16    0x75     0x1E 0x94 0x03
+# ATmega162   0x63     0x1E 0x94 0x04
+# ATmega163   0x66     0x1E 0x94 0x02
+# ATmega169   0x79     0x1E 0x94 0x05
+# ATmega32    0x7F     0x1E 0x95 0x02
+# ATmega323   0x73     0x1E 0x95 0x01
+# ATmega64    0x46     0x1E 0x96 0x02
+# ATmega128   0x44     0x1E 0x97 0x02
+#
+# These codes refer to "BOOT" device codes which are apparently
+# different than standard device codes, for whatever reasons
+# (often one above the standard code).
+
+# There are several extended versions of AVR910 implementations around
+# in the Internet.  These add the following codes (only devices that
+# actually exist are listed):
+
+# ATmega8515    0x3A
+# ATmega128     0x43
+# ATmega64      0x45
+# ATtiny26      0x5E
+# ATmega8535    0x69
+# ATmega32      0x72
+# ATmega16      0x74
+# ATmega8       0x76
+# ATmega169     0x78
+
+#
+# Overall avrdude defaults; suitable for ~/.config/avrdude/avrdude.rc
+#
+default_parallel   = "/dev/parport0";
+default_serial     = "/dev/ttyS0";
+default_spi        = "/dev/spidev0.0:/dev/gpiochip0";
+# default_baudrate = 115200;
+# default_bitclock = 2.5;
+default_linuxgpio  = "gpiochip0";
+allow_subshells    = no;
+
+
+
+
+
+
+
+#
+# PROGRAMMER DEFINITIONS
+#
+
+#------------------------------------------------------------
+# dryrun
+#------------------------------------------------------------
+
+# Using -c dryrun is a good way to get acquainted with AVRDUDE and its
+# command line -U memory operations, -T terminal commands or the
+# interactive terminal -t. No hardware needs to be connected, as the
+# dryrun programmer emulates what can be expected to happen with a real
+# -c programmer and a corresponding connected physical programmer or a
+# directly connected board when it has a bootloader.
+#
+# Examples:
+# avrdude -c dryrun -p ATmega328P -t # Interactive terminal: enter help
+# avrdude -c dryrun -p ATmega2560 -U flash:w:myapplication.hex:i
+# avrdude -c dryrun -p AVR64DB48 -Tconfig
